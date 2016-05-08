@@ -1,0 +1,6 @@
+/*
+** styles.css
+*/
+body{}
+
+#gmap_canvas img{ max-width:none!important; background:none!important; }
