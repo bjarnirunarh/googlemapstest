@@ -88,7 +88,17 @@ function loadIcelandOutlines(map){
 //
 //
 function loadIcelandBaselines(map){
-	
+	//https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_baseline.json	
+	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_baseline.json');
+
+  // Set the stroke width, and fill color for each polygon in the geoJson
+  map.data.setStyle({
+    fillColor: '#FFFFFF',
+    strokeColor: '#C0C0C0',
+		strokeOpacity: 1,
+		strokeWeight: 1,
+		zIndex: 10
+  });
 }
 
 
