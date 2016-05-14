@@ -23,14 +23,16 @@ function initMap(){
 	// Load GeoJSON data for ICELAND outlines
   loadIcelandOutlines(map);
 
+  // loadIcelandFields(map);
+
   // Load GeoJSON data for ICELAND baseline
-  loadIcelandBaselines(map);
+  //loadIcelandBaselines(map);
 
   // Load GeoJSON data for ICELAND juristiction
   loadIcelandJurisdiction(map);
 	
 	// Draw gridlines around Iceland for Latitudes and Longitudes
-	drawIcelandGridlines(map);
+	//drawIcelandGridlines(map);
 	
 }
 
@@ -87,6 +89,11 @@ function loadIcelandOutlines(map){
 //
 //
 //
+
+
+//
+//
+//
 function loadIcelandBaselines(map){
 	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_baseline.json');
 
@@ -105,7 +112,16 @@ function loadIcelandBaselines(map){
 //
 //
 function loadIcelandJurisdiction(map){
+	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_jurisdiction.json');
 
+  // Set the stroke width, and fill color for each polygon in the geoJson
+  map.data.setStyle({
+    fillColor: '#FFFFFF',
+    strokeColor: '#C0C0C0',
+		strokeOpacity: 1,
+		strokeWeight: 1,
+		zIndex: 10
+  });
 }
 
 
