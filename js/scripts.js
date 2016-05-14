@@ -37,6 +37,16 @@ function initMap(){
 }
 
 
+
+/*
+******************************************************************************************
+******************************************************************************************
+******************************** VARIABLES ***********************************************
+******************************************************************************************
+******************************************************************************************
+*/
+var lat1=59.5, lat2=70.5, lng1=-32, lng2=-4;
+
 /*
 ******************************************************************************************
 ******************************************************************************************
@@ -58,14 +68,51 @@ function getMap(Lat,Lng){
 	  }
   ];
 	
+	var minZoomLevel = 5;
+
 	var myOptions = {
-		zoom:5, 
+		zoom:minZoomLevel, 
 		center:new google.maps.LatLng(Lat,Lng),
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		styles: stylesArray
 	};
+
+	var map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions)
+
+	// Bounds for ICELAND
+	var strictBounds = new google.maps.LatLngBounds(
+		new google.maps.LatLng(lat1, lng1), 
+		new google.maps.LatLng(lat2, lng2)
+	);
+
+	// Listen for the dragend event
+	google.maps.event.addListener(map, 'dragend', function() {
+		if (strictBounds.contains(map.getCenter())) return;
+
+		// We're out of bounds - Move the map back within the bounds
+
+		var c = map.getCenter(),
+		x = c.lng(),
+		y = c.lat(),
+		maxX = strictBounds.getNorthEast().lng(),
+		maxY = strictBounds.getNorthEast().lat(),
+		minX = strictBounds.getSouthWest().lng(),
+		minY = strictBounds.getSouthWest().lat();
+
+		if (x < minX) x = minX;
+		if (x > maxX) x = maxX;
+		if (y < minY) y = minY;
+		if (y > maxY) y = maxY;
+
+		map.setCenter(new google.maps.LatLng(y, x));
+	});
+
+	// Limit the zoom level
+	google.maps.event.addListener(map, 'zoom_changed', function() {
+		if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
+	});
 	
-	return new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+	return map;
 }
 
 
@@ -129,7 +176,7 @@ function loadIcelandJurisdiction(map){
 //
 //
 function drawIcelandGridlines(map){
-	var lat1=59.5, lat2=70.5, lng1=-32, lng2=-4, vertical=(lng2-lng1), horizontal=(lat2-lat1);
+	var vertical=(lng2-lng1), horizontal=(lat2-lat1);
 
 	// Create grid lines, vertical
 	for(i=0; i<vertical; i++){
@@ -197,7 +244,6 @@ function createIcelandMarker(map){
 ******************************************************************************************
 */
 
-
 //
 //
 //
@@ -218,29 +264,3 @@ function getExactCoordinates(coord, minutes, seconds, WNES){
 		return newCoord;
 	}
 }
-
-
-//
-//
-//
-function getDistanceCoordinates(lat0, lon0, dx, dy, NM){
-	// Longitude is NORTH
-	// Latitude is WEST
-
-	// One Sjómíla in meters
-	var NM_value = 1852;
-	var meters = NM*NM_value;
-	
-	//Earth’s radius, sphere
- 	R=6378137;
-
-	lat = lat0 + ((180/Math.PI)*(dy/R));
- 	lon = lon0 + ((180/Math.PI)*(dx/R))/(Math.Cos(Math.PI/180.0*lat0));
-}
-
-
-
-
-
-
-

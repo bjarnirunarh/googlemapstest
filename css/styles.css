@@ -1,6 +1,22 @@
 /*
 ** styles.css
 */
-body{}
+#body{padding: 0 auto; width: auto;}
 
+#gmap{overflow:hidden; float: left; height:640px;width:900px;}
+#gmap_canvas{height:640px;width:900px;}
 #gmap_canvas img{ max-width:none!important; background:none!important; }
+
+#right{overflow: hidden; padding: 10px;}
+#right p{padding:2px;}
+
+/* colors for fields*/
+#p1 {background-color:rgba(255,   0, 0, 0.5);}    
+#p2 {background-color:rgba(255,  64, 0, 0.5);}    
+#p3 {background-color:rgba(255, 128, 0, 0.5);}  
+#p4 {background-color:rgba(255, 192, 0, 0.5);}   
+#p5 {background-color:rgba(255, 255, 0, 0.5);}
+#p6 {background-color:rgba(192, 255, 0, 0.5);}  
+#p7 {background-color:rgba(128, 255, 0, 0.5);}
+#p8 {background-color:rgba( 64, 255, 0, 0.5);}  
+#p9 {background-color:rgba(  0, 255, 0, 0.5);}   
