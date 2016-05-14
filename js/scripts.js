@@ -23,7 +23,7 @@ function initMap(){
 	// Load GeoJSON data for ICELAND outlines
   loadIcelandOutlines(map);
 
-  // loadIcelandFields(map);
+  //loadIcelandFields(map);
 
   // Load GeoJSON data for ICELAND baseline
   //loadIcelandBaselines(map);
@@ -32,7 +32,7 @@ function initMap(){
   loadIcelandJurisdiction(map);
 	
 	// Draw gridlines around Iceland for Latitudes and Longitudes
-	//drawIcelandGridlines(map);
+	drawIcelandGridlines(map);
 	
 }
 
@@ -59,7 +59,7 @@ function getMap(Lat,Lng){
   ];
 	
 	var myOptions = {
-		zoom:6, 
+		zoom:5, 
 		center:new google.maps.LatLng(Lat,Lng),
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		styles: stylesArray
@@ -129,7 +129,7 @@ function loadIcelandJurisdiction(map){
 //
 //
 function drawIcelandGridlines(map){
-	var lat1=61, lat2=69, lng1=-29, lng2=-8, vertical=(lng2-lng1), horizontal=(lat2-lat1);
+	var lat1=59.5, lat2=70.5, lng1=-32, lng2=-4, vertical=(lng2-lng1), horizontal=(lat2-lat1);
 
 	// Create grid lines, vertical
 	for(i=0; i<vertical; i++){
