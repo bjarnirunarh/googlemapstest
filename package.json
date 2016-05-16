@@ -1,0 +1,43 @@
+{
+  "name": "googlemapstest",
+  "version": "1.0.0",
+  "description": "google maps api testing",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjarnirunarh/googlemapstest.git"
+  },
+  "keywords": [
+    "auction"
+  ],
+  "author": "bjarnirunarh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bjarnirunarh/googlemapstest/issues"
+  },
+  "homepage": "https://github.com/bjarnirunarh/googlemapstest#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "browser-sync": "^2.11.1",
+    "browserify": "^13.0.1",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "font-awesome": "^4.5.0",
+    "gulp-live-server": "0.0.29",
+    "gulp-sass": "^2.1.1",
+    "gulp-sass-lint": "^1.1.1",
+    "jquery": "^2.2.0",
+    "jquery.actual": "^1.0.18"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.0",
+    "gulp-jadelint": "^0.1.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-livereload": "^3.8.1",
+    "gulp-mocha": "^2.1.3",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-open": "^1.0.0",
+    "jshint-stylish": "^2.0.1",
+    "mocha": "^2.4.5"
+  }
+}

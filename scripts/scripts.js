@@ -20,6 +20,9 @@ function initMap(){
 	//64.963051,-19.020835000000034
 	var map = getMap(64.963051,-19.020835000000034);
 
+
+  var gjLayer = L.geoJson(icelandFieldsData);
+
 	// Load GeoJSON data for ICELAND outlines
   loadIcelandOutlines(map);
 
@@ -27,8 +30,8 @@ function initMap(){
   loadIcelandJurisdiction(map);
 
   //loadIcelandFields(map);
-  var pointInLayer = leafletPip.pointInLayer(point, layer L.GeoJSON, [first])
-  console.log()
+  //var pointInLayer = leafletPip.pointInLayer(point, layer L.GeoJSON, [first])
+  //console.log()
 	
 	// Draw gridlines around Iceland for Latitudes and Longitudes
 	drawIcelandGridlines(map);
@@ -161,7 +164,7 @@ function loadIcelandJurisdiction(map){
 
   // Set the stroke width, and fill color for each polygon in the geoJson
   map.data.setStyle({
-    fillColor: '#FFFFFF',
+  	fillColor: '#FFFFFF',
     strokeColor: '#C0C0C0',
 		strokeOpacity: 1,
 		strokeWeight: 1,
@@ -315,7 +318,6 @@ function readGeoJsonFile(filename){
 ******************************************************************************************
 ******************************************************************************************
 */
-var gju = require('geojson-utils');
 var leafletPip = {
     bassackwards: true,
     pointInLayer: function(p, layer, first) {
