@@ -23,13 +23,12 @@ function initMap(){
 	// Load GeoJSON data for ICELAND outlines
   loadIcelandOutlines(map);
 
-  //loadIcelandFields(map);
-
-  // Load GeoJSON data for ICELAND baseline
-  //loadIcelandBaselines(map);
-
   // Load GeoJSON data for ICELAND juristiction
   loadIcelandJurisdiction(map);
+
+  //loadIcelandFields(map);
+  var pointInLayer = leafletPip.pointInLayer(point, layer L.GeoJSON, [first])
+  console.log()
 	
 	// Draw gridlines around Iceland for Latitudes and Longitudes
 	drawIcelandGridlines(map);
@@ -90,7 +89,6 @@ function getMap(Lat,Lng){
 		if (strictBounds.contains(map.getCenter())) return;
 
 		// We're out of bounds - Move the map back within the bounds
-
 		var c = map.getCenter(),
 		x = c.lng(),
 		y = c.lat(),
@@ -120,7 +118,7 @@ function getMap(Lat,Lng){
 //
 //
 function loadIcelandOutlines(map){
-	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_coordinates.json');
+	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/json/iceland_coordinates.json');
 
   // Set the stroke width, and fill color for each polygon in the geoJson
   map.data.setStyle({
@@ -142,7 +140,7 @@ function loadIcelandOutlines(map){
 //
 //
 function loadIcelandBaselines(map){
-	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_baseline.json');
+	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/json/iceland_baseline.json');
 
   // Set the stroke width, and fill color for each polygon in the geoJson
   map.data.setStyle({
@@ -159,7 +157,7 @@ function loadIcelandBaselines(map){
 //
 //
 function loadIcelandJurisdiction(map){
-	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_jurisdiction.json');
+	map.data.loadGeoJson('https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/json/iceland_jurisdiction.json');
 
   // Set the stroke width, and fill color for each polygon in the geoJson
   map.data.setStyle({
@@ -255,8 +253,8 @@ function getExactCoordinates(coord, minutes, seconds, WNES){
 	var decimals = ((minutes*60) + seconds)/3600;
 	
 	// West and South are negative deegrees
-	if(WNES==='W' || WNES==='S'){
-		newCoord = coord+decimals; 
+	if(WNES==='W' || WNES==='S' && coord < 0){
+		newCoord = coord-decimals; 
 		return -newCoord;
 	}
 	else{
@@ -264,3 +262,80 @@ function getExactCoordinates(coord, minutes, seconds, WNES){
 		return newCoord;
 	}
 }
+
+
+//
+// polygon is the field number
+//
+function isPointInPolygon(lat, lng, polygon){
+
+	var file = getPolygonJsonFile(polygon);
+
+
+}
+
+
+
+/*
+******************************************************************************************
+******************************************************************************************
+******************************** JSON HELP FUNCTIONS *************************************
+******************************************************************************************
+******************************************************************************************
+*/
+
+//
+//
+//
+function getPolygonJsonFileName(polygon){
+	var filenameStart = 'https://raw.githubusercontent.com/bjarnirunarh/googlemapstest/master/data/iceland_fields_json/iceland_field_';
+	var temp = filenameStart.concat(polygon);
+	var filenameEnd = '.json'
+	var filename = temp.concat(filenameEnd);
+	return filename;
+}
+
+function readGeoJsonFile(filename){
+	$.getJSON(filename, function (data) {
+    var items = [];
+    $.each(data.features, function (key, val) {
+      geometry = val.geometry;
+  		properties = val.properties;
+  		console.log(val.geometry.coordinates);
+    });
+  });
+}
+
+
+
+/*
+******************************************************************************************
+******************************************************************************************
+******************************** LEAFLET PIP FUNCTIONS ***********************************
+******************************************************************************************
+******************************************************************************************
+*/
+var gju = require('geojson-utils');
+var leafletPip = {
+    bassackwards: true,
+    pointInLayer: function(p, layer, first) {
+        if (p instanceof L.LatLng) p = [p.lng, p.lat];
+        else if (leafletPip.bassackwards) p = p.concat().reverse();
+
+        var results = [];
+
+        layer.eachLayer(function(l) {
+            if (first && results.length) return;
+            if ((l instanceof L.MultiPolygon ||
+                 l instanceof L.Polygon) &&
+                gju.pointInPolygon({
+                    type: 'Point',
+                    coordinates: p
+                }, l.toGeoJSON().geometry)) {
+                results.push(l);
+            }
+        });
+        return results;
+    }
+};
+
